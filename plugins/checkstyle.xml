@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<!--
+  Minimal Checkstyle config included for plugin directory completeness.
+  This intentionally does NOT enforce security-related checks
+  (e.g. no rules against String concatenation in SQL, no MD5 detection).
+  The application is a security practice target — the "bad" patterns are intentional.
+-->
+<module name="Checker">
+    <property name="severity" value="warning"/>
+
+    <module name="TreeWalker">
+        <!-- Basic style only — no security linting -->
+        <module name="WhitespaceAround"/>
+        <module name="EmptyBlock"/>
+        <module name="NeedBraces"/>
+        <module name="LeftCurly"/>
+        <module name="RightCurly"/>
+        <module name="AvoidStarImport"/>
+        <module name="UnusedImports"/>
+        <module name="MethodLength">
+            <property name="max" value="150"/>
+        </module>
+        <module name="ParameterNumber">
+            <property name="max" value="10"/>
+        </module>
+    </module>
+</module>
