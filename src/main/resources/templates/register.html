@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register — NBG</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light d-flex align-items-center justify-content-center" style="min-height:100vh">
+<div class="card shadow" style="width:450px">
+    <div class="card-header text-white" style="background:#003366">
+        National Bank of Greece — Open Account
+    </div>
+    <div class="card-body p-4">
+        <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
+        <!-- No CSRF token, no CAPTCHA, no email verification -->
+        <form method="post" action="/register">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+                <!-- No complexity requirement -->
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="fullName" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" name="email" class="form-control" required>
+            </div>
+            <!-- Role field — privilege escalation if user submits role=ADMIN -->
+            <input type="hidden" name="role" value="USER">
+            <div class="d-grid">
+                <button type="submit" class="btn" style="background:#003366;color:#fff">Create Account</button>
+            </div>
+        </form>
+        <div class="text-center mt-3 small"><a href="/login">Already have an account? Sign in</a></div>
+    </div>
+</div>
+</body>
+</html>
