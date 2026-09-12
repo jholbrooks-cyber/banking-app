@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Detail — NBG</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <a href="/dashboard" class="btn btn-sm btn-outline-secondary mb-3">← Dashboard</a>
+
+    <div th:if="${error}" class="alert alert-danger" th:utext="${error}"></div>
+
+    <div class="card mb-4">
+        <div class="card-header" style="background:#003366; color:#fff">
+            Account Details
+            <!-- IDOR: account ID is in the URL, no ownership check -->
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Account Number:</strong> <span th:text="${account?.accountNumber}"></span></p>
+                    <p><strong>Type:</strong> <span th:text="${account?.accountType}"></span></p>
+                    <p><strong>Currency:</strong> <span th:text="${account?.currency}"></span></p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Balance:</strong> €<span th:text="${account?.balance}"></span></p>
+                    <p><strong>IBAN:</strong> <code th:text="${account?.iban}"></code></p>
+                    <!-- Internal user_id exposed in UI -->
+                    <p><strong>User ID:</strong> <span th:text="${account?.userId}"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5>Transaction History</h5>
+    <table class="table table-hover bg-white">
+        <thead class="table-dark">
+            <tr><th>Date</th><th>Type</th><th>From</th><th>To</th><th>Amount</th>
+                <th>Description</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            <tr th:each="tx : ${transactions}">
+                <td th:text="${tx.createdAt}"></td>
+                <td th:text="${tx.transactionType}"></td>
+                <td th:text="${tx.fromAccount}"></td>
+                <td th:text="${tx.toAccount}"></td>
+                <td>€<span th:text="${tx.amount}"></span></td>
+                <!-- Description rendered raw — stored XSS execution -->
+                <td th:utext="${tx.description}"></td>
+                <td th:text="${tx.status}"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
