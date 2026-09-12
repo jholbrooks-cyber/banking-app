@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     username    VARCHAR(50)  NOT NULL UNIQUE,
     password    VARCHAR(255) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE users (
     is_active   BOOLEAN DEFAULT TRUE
 );
 
-CREATE TABLE accounts (
+CREATE TABLE IF NOT EXISTS accounts (
     id              BIGINT AUTO_INCREMENT PRIMARY KEY,
     account_number  VARCHAR(20)  NOT NULL UNIQUE,
     user_id         BIGINT       NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE accounts (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
     id              BIGINT AUTO_INCREMENT PRIMARY KEY,
     from_account    VARCHAR(20),
     to_account      VARCHAR(20),
@@ -34,7 +34,7 @@ CREATE TABLE transactions (
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE messages (
+CREATE TABLE IF NOT EXISTS messages (
     id          BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id     BIGINT       NOT NULL,
     subject     VARCHAR(255),
