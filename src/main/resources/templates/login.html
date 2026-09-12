@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>National Bank of Greece — Login</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body { background: #003366; }
+        .card { border-top: 4px solid #003366; }
+        .btn-bank { background: #003366; color: #fff; }
+        .btn-bank:hover { background: #002244; color: #fff; }
+        .logo-text { color: #003366; font-weight: 700; font-size: 1.4rem; }
+    </style>
+</head>
+<body class="d-flex align-items-center justify-content-center" style="min-height:100vh">
+<div class="card shadow" style="width:400px">
+    <div class="card-body p-4">
+        <div class="text-center mb-4">
+            <img src="https://via.placeholder.com/60x60/003366/ffffff?text=NBG" alt="NBG" class="rounded mb-2">
+            <div class="logo-text">National Bank of Greece</div>
+            <small class="text-muted">Online Banking Portal</small>
+        </div>
+
+        <!-- Error displayed without encoding — reflected XSS possible via ?error= param -->
+        <div th:if="${error}" class="alert alert-danger" th:utext="${error}"></div>
+
+        <form method="post" action="/login">
+            <!-- No CSRF token -->
+            <input type="hidden" name="redirect" th:value="${redirect}">
+            <div class="mb-3">
+                <label class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" placeholder="Enter username" autocomplete="username">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" placeholder="Enter password" autocomplete="current-password">
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-bank">Sign In</button>
+            </div>
+        </form>
+
+        <hr>
+        <div class="text-center small">
+            <a href="/reset-password">Forgot Password?</a> &nbsp;|&nbsp;
+            <a href="/register">Open an Account</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
